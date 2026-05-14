@@ -1,0 +1,55 @@
+{
+    "task": {
+        "path": "D:\\Turing\\Submitted_Tasks\\019e17b3da8a742e8e7ef096cfc6a829-SWARMBENCH-FANOUT-KNOWLEDGE-RESEARCH-AGRICULTURAL-RESILIENCE-STRESS-BENCHMARK",
+        "git_url": null,
+        "git_commit_id": null,
+        "name": null,
+        "ref": null,
+        "overwrite": false,
+        "download_dir": null,
+        "source": null
+    },
+    "trial_name": "019e17b3da8a742e8e7ef096cfc6a829__57W3sVM",
+    "trials_dir": "D:\\Turing\\Submitted_Tasks\\019e17b3da8a742e8e7ef096cfc6a829-SWARMBENCH-FANOUT-KNOWLEDGE-RESEARCH-AGRICULTURAL-RESILIENCE-STRESS-BENCHMARK\\execution_logs\\single-kimi-agent-15",
+    "timeout_multiplier": 10.0,
+    "agent_timeout_multiplier": null,
+    "verifier_timeout_multiplier": null,
+    "agent_setup_timeout_multiplier": 20.0,
+    "environment_build_timeout_multiplier": 20.0,
+    "agent": {
+        "name": "swarm-kimi-single",
+        "import_path": null,
+        "model_name": "fireworks_ai/accounts/fireworks/models/kimi-k2p5",
+        "override_timeout_sec": null,
+        "override_setup_timeout_sec": null,
+        "max_timeout_sec": null,
+        "kwargs": {},
+        "env": {
+            "FIREWORKS_API_KEY": "${FIREWORKS_API_KEY}"
+        }
+    },
+    "environment": {
+        "type": "docker",
+        "import_path": null,
+        "force_build": false,
+        "delete": true,
+        "override_cpus": null,
+        "override_memory_mb": null,
+        "override_storage_mb": null,
+        "override_gpus": null,
+        "suppress_override_warnings": false,
+        "mounts_json": null,
+        "env": {},
+        "kwargs": {}
+    },
+    "verifier": {
+        "override_timeout_sec": null,
+        "max_timeout_sec": null,
+        "env": {
+            "FIREWORKS_API_KEY": "${FIREWORKS_API_KEY}"
+        },
+        "disable": false
+    },
+    "artifacts": [],
+    "job_id": "51a94648-a696-460f-a7aa-ca7971a513e1"
+}

@@ -1,0 +1,204 @@
+sub_tasks:
+
+  - id: market_system_specialist
+    description: |
+      Analyze only these input reports:
+      - /environment/input_artifacts/Skills.pdf
+
+      Extract for each report:
+      - document_id
+      - rules_governance_flag
+      - vendor_recruitment_flag
+      - budget_finance_flag
+      - liability_compliance_flag
+      - conflict_management_flag
+      - emergency_plan_flag
+      - performance_tracking_flag
+      - community_support_flag
+      - market_complexity_class
+
+      Rules:
+      - flags ∈ {0,1}
+      - market_complexity_class ∈ {1,2,3,4}
+
+      Return structured JSON only.
+      Do not calculate scores.
+
+    depends_on: []
+    parallel_group: fan_out
+
+
+  - id: price_volatility_specialist
+    description: |
+      Analyze only these input reports:
+      - /environment/input_artifacts/REPORT.pdf
+      - /environment/input_artifacts/version-corr.pdf
+
+      Extract for each report:
+      - document_id
+      - commodity_count
+      - demand_supply_gap_flag
+      - global_market_flag
+      - input_cost_flag
+      - middlemen_flag
+      - policy_intervention_flag
+      - storage_reserve_flag
+      - consumer_impact_flag
+      - producer_impact_flag
+      - volatility_severity_class
+
+      Rules:
+      - flags ∈ {0,1}
+      - volatility_severity_class ∈ {1,2,3,4,5}
+      - commodity_count = min(extracted_commodity_count, 8)
+
+      Return structured JSON only.
+      Do not calculate scores.
+
+    depends_on: []
+    parallel_group: fan_out
+
+
+  - id: pesticide_risk_specialist
+    description: |
+      Analyze only these input reports:
+      - /environment/input_artifacts/217.pdf
+      - /environment/input_artifacts/09_01_2017.pdf
+      - /environment/input_artifacts/manual1.pdf
+
+      Extract for each report:
+      - document_id
+      - pesticide_group_count
+      - residue_testing_flag
+      - food_safety_flag
+      - water_testing_flag
+      - toxicology_flag
+      - neurotoxicity_flag
+      - worker_exposure_flag
+      - environmental_side_effect_flag
+      - method_complexity_class
+
+      Rules:
+      - flags ∈ {0,1}
+      - method_complexity_class ∈ {1,2,3,4}
+      - pesticide_group_count = min(extracted_pesticide_group_count, 8)
+
+      Return structured JSON only.
+      Do not calculate scores.
+
+    depends_on: []
+    parallel_group: fan_out
+
+
+  - id: crop_disease_specialist
+    description: |
+      Analyze only these input reports:
+      - /environment/input_artifacts/ebook.pdf
+      - /environment/input_artifacts/gement.pdf
+      - /environment/input_artifacts/4.2020.pdf
+      - /environment/input_artifacts/PAT 301.pdf
+      - /environment/input_artifacts/Field.pdf
+
+      Extract for each report:
+      - document_id
+      - pathogen_type_count
+      - symptom_group_count
+      - diagnostic_process_flag
+      - disease_cycle_flag
+      - climate_risk_flag
+      - biological_control_flag
+      - chemical_control_flag
+      - resistant_variety_flag
+      - yield_loss_flag
+      - disease_severity_class
+
+      Rules:
+      - flags ∈ {0,1}
+      - disease_severity_class ∈ {1,2,3,4,5}
+      - pathogen_type_count = min(extracted_pathogen_type_count, 6)
+      - symptom_group_count = min(extracted_symptom_group_count, 8)
+
+      Return structured JSON only.
+      Do not calculate scores.
+
+    depends_on: []
+    parallel_group: fan_out
+
+
+  - id: worker_health_specialist
+    description: |
+      Analyze only these input reports:
+      - /environment/input_artifacts/A Practical Guide.pdf
+      - /environment/input_artifacts/wams_161135.pdf
+      - /environment/input_artifacts/Heat_Wave_Vulnerability_and_Threshold_Assessment_Report_14_June_2022.pdf
+
+      Extract for each report:
+      - document_id
+      - chemical_exposure_flag
+      - machinery_injury_flag
+      - respiratory_disease_flag
+      - zoonotic_disease_flag
+      - heat_cold_stress_flag
+      - mental_health_flag
+      - ppe_training_flag
+      - monitoring_flag
+      - severe_outcome_count
+      - health_severity_class
+
+      Rules:
+      - flags ∈ {0,1}
+      - health_severity_class ∈ {1,2,3,4,5}
+      - severe_outcome_count = min(extracted_severe_outcome_count, 5)
+
+      Return structured JSON only.
+      Do not calculate scores.
+
+    depends_on: []
+    parallel_group: fan_out
+
+
+  - id: reducer
+    description: |
+      Use only intermediate JSON outputs.
+
+      Combine the structured JSON outputs from all specialist agents.
+
+      Use the extracted specialist records to calculate each domain score by averaging document-level raw scores, rounding to integer, then applying the domain bonus once.
+
+      Calculate final_synthesis_value as:
+      base_resilience_pressure + cross_domain_penalty
+
+      base_resilience_pressure =
+      round(
+      market_system_score * 0.18
+      + price_volatility_score * 0.22
+      + pesticide_risk_score * 0.20
+      + crop_disease_score * 0.22
+      + worker_health_score * 0.18
+      )
+
+      Apply the cross-domain penalty rules from the task instruction.
+
+      Validate that every PDF from /environment/input_artifacts/ is represented in source_files_used.
+            
+      If the document mentions more than the cap, use the capped value.
+
+
+      Final output must contain only:
+      - source_files_used
+      - market_system_score
+      - price_volatility_score
+      - pesticide_risk_score
+      - crop_disease_score
+      - worker_health_score
+      - final_synthesis_value
+
+      Return final JSON only.
+
+    depends_on:
+    - market_system_specialist
+    - price_volatility_specialist
+    - pesticide_risk_specialist
+    - worker_health_specialist
+    - crop_disease_specialist
+    parallel_group: synthesize

@@ -1,0 +1,12 @@
+/tests/test.sh: line 5: cd: /testbed: No such file or directory
+all_source_files_used: PASS (0.025)
+market_system_score_correct: PASS (0.15416666666666667)
+price_volatility_score_correct: PASS (0.15416666666666667)
+pesticide_risk_score_correct: PASS (0.15416666666666667)
+crop_disease_score_correct: PASS (0.15416666666666667)
+worker_health_score_correct: PASS (0.15416666666666667)
+exact_output_keys_only: PASS (0.025)
+no_intermediate_variables_in_output: PASS (0.025)
+final_synthesis_value_correct: PASS (0.15416666666666667)
+final_synthesis_consistent_with_domain_scores: PASS (0.025)
+FINAL SCORE: 1.0

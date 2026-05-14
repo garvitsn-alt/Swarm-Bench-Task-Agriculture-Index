@@ -1,0 +1,33 @@
+[task]
+name = "swarmbench/019e17b3da8a742e8e7ef096cfc6a829-SWARMBENCH-FANOUT-KNOWLEDGE-RESEARCH-AGRICULTURAL-RESILIENCE-STRESS-BENCHMARK"
+description = "Analyze agricultural reports across market systems, price volatility, pesticide risk, crop disease, and worker health to produce a synthesized agricultural resilience stress score."
+
+[metadata]
+verifier_type = "executable"
+domain = "knowledge-research"
+coordination_pattern = "fan-out-synthesize"
+human_solving_hours_estimate = 16.0
+human_solving_hours_justification = "A domain expert would require approximately 8 hours to inspect and classify 14 agricultural reports while extracting structured binary and integer indicators across market systems, price volatility, pesticide risk, crop disease, and worker health domains. Approximately 5 hours would be needed to reconcile domain-specific evidence, apply conditional scoring formulas, and validate cross-domain calculations. An additional 3 hours would be required for final synthesis validation, consistency checks, and preparation of the final structured JSON output."
+estimated_sub_agents = 6
+input_token_estimate = 65000
+why_multi_agent = "A single agent can lose context consistency while tracking different agricultural evidence types and conditional scoring across all files. Multi-agent decomposition lets each specialist handle a focused domain before a reducer performs final synthesis."
+reference_link = "https://fssai.gov.in/upload/uploadfiles/files/Manual_Pesticides_Residues_09_01_2017(1).pdf"
+reference_links = [
+  "https://ndl.ethernet.edu.et/bitstream/123456789/1909/1/217.pdf.pdf",
+  "https://ndl.ethernet.edu.et/bitstream/123456789/88785/1/Agricultural%20Medicine%20A%20Practical%20Guide.pdf",
+  "https://www.cabi.org/Uploads/eLearning/PestSmart/ebook.pdf",
+  "https://www.rvskvv.net/images/Diseases_Field-Crops_a_20.04.2020.pdf",
+  "https://www.bhumipublishing.com/wp-content/uploads/2024/11/Plant-Pathology-and-Disease-Management.pdf"]
+
+
+
+[agent]
+timeout_sec = 2000
+
+[verifier]
+timeout_sec = 600
+
+[environment]
+cpus = 2
+memory_mb = 4096
+build_timeout_sec = 1800
